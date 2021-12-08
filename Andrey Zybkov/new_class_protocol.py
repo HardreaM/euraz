@@ -11,7 +11,7 @@ class Value:
     def get_all (self):
         return self.__source_ip, self.__target_ip, self.__ttl, self.__packet_data, self.__summa
 
-    def encode (self):
+    def encode (self, flag=1):
 
         source_ip = Value.formate(int(self.__source_ip[0]), 1)
 
@@ -29,9 +29,21 @@ class Value:
 
         out = source_ip + target_ip + ttl + data + summa
 
+        if flag == -1:
+            a = bytes(summa[19])
+            for i in range(19):
+                a += out[18-i]
+
         return out
 
-    def decode (data):
+    def decode (data, flag=1):
+        out = data[19]
+
+        if flag == -1:
+            for i in range(19):
+                out += data[18-i]
+
+            data = out
 
         source_ip = []
         target_ip = []
