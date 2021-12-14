@@ -37,13 +37,15 @@ class Value:
                 s = [out[19-i]]
                 a += bytes(s)
             
-            return a
+            return a + bytes([1])
 
-        return out
+        return out + bytes([0])
 
-    def decode (data, flag=1):
+    def decode (data):
+        
+        flag = data[20]
 
-        if flag == -1:
+        if flag == 1:
 
             out = bytes([data[19]])
             
@@ -104,4 +106,4 @@ class Value:
 data = '127.0.0.1 192.168.0.1 100 1337228 84672'
 value1 = Value(data.split())
 print(value1.get_all())
-print(Value.decode(value1.encode(-1), -1))
+print(Value.decode(value1.encode(-1)))
